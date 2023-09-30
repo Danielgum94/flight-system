@@ -2,8 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export default function Controlpanel({ planeArr }) { // Accept planeArr as a prop
-
+export default function Controlpanel({ planeArr }) {
   const totalPassengers = planeArr.reduce((total, flight) => total + parseInt(flight.passengers, 10), 0);
   const totalFlights = planeArr.length;
 
@@ -32,11 +31,21 @@ export default function Controlpanel({ planeArr }) { // Accept planeArr as a pro
                 Delete Flight
               </Button>
             </Link>
+            <Col xs={12} className="text-center mt-4">
+              <div className="bg-primary text-white p-3 rounded">
+                Total Passengers: {totalPassengers}
+              </div>
+            </Col>
+            <Col xs={12} className="text-center mt-4">
+              <div className="bg-danger text-white p-3 rounded">
+                Total Flights: {totalFlights}
+              </div>
+            </Col>
           </div>
         </Col>
         <Col xs={12} md={9}>
           <Row>
-            {planeArr.map((flight) => ( // Use planeArr instead of flightsData
+            {planeArr.map((flight) => (
               <Col key={flight.id} xs={12} md={6}>
                 <Card className="mb-4">
                   <Card.Body>
@@ -49,18 +58,6 @@ export default function Controlpanel({ planeArr }) { // Accept planeArr as a pro
                 </Card>
               </Col>
             ))}
-          <Row className="mt-4">
-            <Col xs={12} className="text-center">
-              <div className="bg-primary text-white p-3 rounded">
-                Total Passengers: {totalPassengers}
-              </div>
-            </Col>
-            <Col xs={12} className="text-center mt-4">
-              <div className="bg-danger text-white p-3 rounded">
-                Total Flights: {totalFlights}
-              </div>
-            </Col>
-          </Row>
           </Row>
         </Col>
       </Row>

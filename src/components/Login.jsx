@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { Container,Form, Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 export default function Login() {
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const correctPassword = '12345';
   const [loginError, setLoginError] = useState(false);
-  let nav = useNavigate()
+  const nav = useNavigate();
 
   const handleLogin = () => {
     if (password === correctPassword) {
-        nav('/controlpanel')
+      nav('/controlpanel');
     } else {
       setLoginError(true);
     }
@@ -28,18 +30,43 @@ export default function Login() {
         )}
         <Form>
           <Form.Group>
-            <Form.Label>סיסמה</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="הכנס סיסמה"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <Form.Label>
+              סיסמה
+              <span
+                id="passwordTooltip"
+                data-toggle="tooltip"
+                title="סיסמה: 12345"
+              >
+                <i className="fas fa-question-circle"></i>
+              </span>
+              <p>The Password is 12345</p>
+            </Form.Label>
+            <div className="password-input">
+              <Form.Control
+                type={showPassword ? 'text' : 'password'}
+                placeholder="הכנס סיסמה"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="off"
+              />
+              <div
+                className="show-password-icon"
+                onClick={() => setShowPassword(!showPassword)}
+                onMouseEnter={() => setShowPassword(true)}
+                onMouseLeave={() => setShowPassword(false)}
+              >
+                {showPassword ? (
+                  <FontAwesomeIcon icon={faEyeSlash} />
+                ) : (
+                  <FontAwesomeIcon icon={faEye} />
+                )}
+              </div>
+            </div>
           </Form.Group>
           <Button
             variant="primary"
             onClick={handleLogin}
-            className="btn-block btn-info mt-2" // Add margin-top here
+            className="btn-block btn-info mt-2"
           >
             כניסה
           </Button>
